@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Helpline Emergency Information</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --purdue-black: #000000;
+            --purdue-gold: #D4AF37;
+            --purdue-dark-gold: #B8941F;
+            --dark-bg: #0a0a0a;
+            --dark-card: #1a1a1a;
+            --dark-border: #333333;
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --danger: #dc2626;
+            --success: #22c55e;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: var(--dark-card);
+            border-radius: 20px;
+            border: 2px solid var(--purdue-gold);
+        }
+
+        .app-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--purdue-gold) 0%, var(--purdue-dark-gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app-subtitle {
+            font-size: 1.1rem;
+            color: var(--purdue-gold);
+            opacity: 0.9;
+        }
+
+        .emergency-alert {
+            background: rgba(220, 38, 38, 0.1);
+            border: 2px solid var(--danger);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .emergency-alert h2 {
+            color: var(--danger);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--dark-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid var(--dark-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--purdue-gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: var(--dark-bg);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--purdue-gold);
+        }
+
+        .info-item h4 {
+            color: var(--purdue-gold);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .info-item p {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .contact-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--purdue-gold) 0%, var(--purdue-dark-gold) 100%);
+            color: var(--purdue-black);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, var(--danger) 0%, #b91c1c 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+        }
+
+        .purdue-resources {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid var(--purdue-gold);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .purdue-resources h3 {
+            color: var(--purdue-gold);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .resource-item {
+            text-align: center;
+            padding: 15px;
+            background: var(--dark-bg);
+            border-radius: 10px;
+        }
+
+        .resource-item strong {
+            color: var(--purdue-gold);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .app-title {
+                font-size: 2rem;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <div class="header">
+            <h1 class="app-title">🚨 Helpline</h1>
+            <p class="app-subtitle">Purdue University Emergency Health Information</p>
+        </div>
+
+        <div class="emergency-alert">
+            <h2>⚠️ EMERGENCY INFORMATION</h2>
+            <p><strong>This information is for emergency use only.</strong> Please contact emergency services (911) immediately if this person requires medical attention.</p>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title">👤 Personal Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>Basic Details</h4>
+                    <p><strong>Name:</strong> <span id="name">Loading...</span></p>
+                    <p><strong>Age:</strong> <span id="age">Loading...</span></p>
+                    <p><strong>Blood Type:</strong> <span id="bloodType">Loading...</span></p>
+                </div>
+                <div class="info-item">
+                    <h4>Medical Information</h4>
+                    <p><strong>Allergies:</strong> <span id="allergies">Loading...</span></p>
+                    <p><strong>Medications:</strong> <span id="medications">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title">🏫 Campus Information</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>Campus Details</h4>
+                    <p><strong>Campus Location:</strong> <span id="campusLocation">Loading...</span></p>
+                    <p><strong>Residence:</strong> <span id="residence">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <h3 class="card-title">📞 Emergency Contacts</h3>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4>Primary Emergency Contact</h4>
+                    <p><strong>Name:</strong> <span id="contact1Name">Loading...</span></p>
+                    <p><strong>Relationship:</strong> <span id="contact1Relationship">Loading...</span></p>
+                    <p><strong>Phone:</strong> <span id="contact1Phone">Loading...</span></p>
+                </div>
+                <div class="info-item">
+                    <h4>Secondary Emergency Contact</h4>
+                    <p><strong>Name:</strong> <span id="contact2Name">Loading...</span></p>
+                    <p><strong>Relationship:</strong> <span id="contact2Relationship">Loading...</span></p>
+                    <p><strong>Phone:</strong> <span id="contact2Phone">Loading...</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-buttons">
+            <a href="#" id="callEmergency" class="btn btn-danger">
+                🚨 Call Emergency Contact
+            </a>
+            <a href="tel:911" class="btn btn-danger">
+                🚨 Call 911
+            </a>
+            <a href="tel:7654948221" class="btn">
+                🏫 Purdue Police
+            </a>
+        </div>
+
+        <div class="purdue-resources">
+            <h3>🏫 Purdue Campus Resources</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <strong>Student Health Center</strong><br>
+                    (765) 494-1700<br>
+                    601 Stadium Ave
+                </div>
+                <div class="resource-item">
+                    <strong>Campus Counseling</strong><br>
+                    (765) 494-6995<br>
+                    Student Health Center
+                </div>
+                <div class="resource-item">
+                    <strong>Purdue Police</strong><br>
+                    (765) 494-8221<br>
+                    205 S. Martin Jischke Drive
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL parameters to get health data
+        function getHealthData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dataParam = urlParams.get('data');
+            
+            if (dataParam) {
+                try {
+                    const healthData = JSON.parse(decodeURIComponent(dataParam));
+                    populatePage(healthData);
+                } catch (error) {
+                    console.error('Error parsing health data:', error);
+                    showError();
+                }
+            } else {
+                showError();
+            }
+        }
+
+        function populatePage(data) {
+            // Personal Information
+            document.getElementById('name').textContent = data.name || 'Not specified';
+            document.getElementById('age').textContent = data.age || 'Not specified';
+            document.getElementById('bloodType').textContent = data.bloodType || 'Not specified';
+            document.getElementById('allergies').textContent = data.allergies || 'None specified';
+            document.getElementById('medications').textContent = data.medications || 'None specified';
+            
+            // Campus Information
+            document.getElementById('campusLocation').textContent = data.campusLocation || 'Not specified';
+            document.getElementById('residence').textContent = data.residence || 'Not specified';
+            
+            // Emergency Contacts
+            if (data.emergencyContact1) {
+                document.getElementById('contact1Name').textContent = data.emergencyContact1.name || 'Not specified';
+                document.getElementById('contact1Relationship').textContent = data.emergencyContact1.relationship || 'Not specified';
+                document.getElementById('contact1Phone').textContent = data.emergencyContact1.phone || 'Not specified';
+                
+                // Update emergency contact button
+                const emergencyBtn = document.getElementById('callEmergency');
+                if (data.emergencyContact1.phone) {
+                    emergencyBtn.href = `tel:${data.emergencyContact1.phone}`;
+                }
+            }
+            
+            if (data.emergencyContact2) {
+                document.getElementById('contact2Name').textContent = data.emergencyContact2.name || 'Not specified';
+                document.getElementById('contact2Relationship').textContent = data.emergencyContact2.relationship || 'Not specified';
+                document.getElementById('contact2Phone').textContent = data.emergencyContact2.phone || 'Not specified';
+            }
+        }
+
+        function showError() {
+            document.querySelector('.container').innerHTML = `
+                <div class="header">
+                    <h1 class="app-title">🚨 Helpline</h1>
+                    <p class="app-subtitle">Purdue University Emergency Health Information</p>
+                </div>
+                <div class="emergency-alert">
+                    <h2>⚠️ Error Loading Information</h2>
+                    <p>Unable to load emergency health information. Please ensure the QR code was scanned correctly.</p>
+                </div>
+            `;
+        }
+
+        // Load data when page loads
+        window.addEventListener('load', getHealthData);
+    </script>
+</body>
+</html> 
