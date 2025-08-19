@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heart, Phone, MapPin, User, Pill, Droplets, AlertTriangle, Shield, Save } from 'lucide-react';
+import { Heart, Phone, MapPin, User, Pill, Droplets, AlertTriangle, Shield, Save, CheckCircle } from 'lucide-react';
 
 const HealthForm = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({
@@ -29,11 +29,50 @@ const HealthForm = ({ onSubmit, initialData }) => {
     }
   });
 
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+
   useEffect(() => {
     if (initialData) {
       setFormData(initialData);
     }
   }, [initialData]);
+
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.name.trim()) {
+      newErrors.name = 'Name is required';
+    }
+    
+    if (!formData.age || formData.age < 16 || formData.age > 100) {
+      newErrors.age = 'Age must be between 16 and 100';
+    }
+    
+    if (!formData.bloodType) {
+      newErrors.bloodType = 'Blood type is required';
+    }
+    
+    if (!formData.campusLocation) {
+      newErrors.campusLocation = 'Campus location is required';
+    }
+    
+    if (!formData.residence) {
+      newErrors.residence = 'Residence is required';
+    }
+    
+    if (!formData.emergencyContact1.name.trim()) {
+      newErrors.emergencyContact1 = 'Primary emergency contact name is required';
+    }
+    
+    if (!formData.emergencyContact1.phone.trim()) {
+      newErrors.emergencyContact1Phone = 'Primary emergency contact phone is required';
+    }
+    
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (field, value) => {
     if (field.includes('.')) {
@@ -51,11 +90,36 @@ const HealthForm = ({ onSubmit, initialData }) => {
         [field]: value
       }));
     }
+    
+    // Clear error when user starts typing
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: null }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    
+    if (!validateForm()) {
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      // Simulate API call
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      onSubmit(formData);
+      setShowSuccess(true);
+      
+      // Hide success message after 3 seconds
+      setTimeout(() => setShowSuccess(false), 3000);
+    } catch (error) {
+      console.error('Error saving data:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
@@ -115,6 +179,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                 placeholder="Enter your full name"
                 required
               />
+              {errors.name && <p className="error-message">{errors.name}</p>}
             </div>
             
             <div className="form-group">
@@ -129,6 +194,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                 max="100"
                 required
               />
+              {errors.age && <p className="error-message">{errors.age}</p>}
             </div>
             
             <div className="form-group">
@@ -144,6 +210,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                   <option key={type} value={type}>{type}</option>
                 ))}
               </select>
+              {errors.bloodType && <p className="error-message">{errors.bloodType}</p>}
             </div>
           </div>
         </div>
@@ -199,6 +266,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                   <option key={location} value={location}>{location}</option>
                 ))}
               </select>
+              {errors.campusLocation && <p className="error-message">{errors.campusLocation}</p>}
             </div>
             
             <div className="form-group">
@@ -214,6 +282,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                   <option key={residence} value={residence}>{residence}</option>
                 ))}
               </select>
+              {errors.residence && <p className="error-message">{errors.residence}</p>}
             </div>
           </div>
         </div>
@@ -243,6 +312,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                     placeholder="Full name"
                     required
                   />
+                  {errors.emergencyContact1 && <p className="error-message">{errors.emergencyContact1}</p>}
                 </div>
                 
                 <div className="form-group">
@@ -267,6 +337,7 @@ const HealthForm = ({ onSubmit, initialData }) => {
                     placeholder="(555) 123-4567"
                     required
                   />
+                  {errors.emergencyContact1Phone && <p className="error-message">{errors.emergencyContact1Phone}</p>}
                 </div>
               </div>
             </div>
@@ -316,10 +387,28 @@ const HealthForm = ({ onSubmit, initialData }) => {
 
         {/* Submit Button */}
         <div className="submit-section">
-          <button type="submit" className="submit-btn">
-            <Save className="w-5 h-5" />
-            <span>Save Health Information</span>
+          <button type="submit" className="submit-btn" disabled={isSubmitting}>
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span>Saving...</span>
+              </>
+            ) : (
+              <>
+                <Save className="w-5 h-5" />
+                <span>Save Health Information</span>
+              </>
+            )}
           </button>
+          {showSuccess && (
+            <div className="success-message">
+              <CheckCircle className="w-6 h-6 text-green-500" />
+              Health information saved successfully!
+            </div>
+          )}
           <p className="submit-note">
             <Shield className="w-4 h-4 inline" />
             Your information is stored locally and securely on your device
