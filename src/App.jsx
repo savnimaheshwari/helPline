@@ -17,30 +17,31 @@ function App() {
     emergencyContacts: 0
   });
 
-  // Load saved data from encrypted localStorage on app start
+  // Load saved data from localStorage on app start
   useEffect(() => {
     const savedData = localStorage.getItem('helplineHealthData');
     if (savedData) {
       try {
-        // In a real app, this would decrypt the data
         const parsedData = JSON.parse(savedData);
         setHealthData(parsedData);
-        
-        // Update app stats
         updateAppStats(parsedData);
       } catch (error) {
         console.error('Error loading saved data:', error);
         showNotification('Error loading saved data', 'error');
       }
     }
+  }, []);
 
-    // Hide welcome message after 3 seconds
+  // Hide welcome message after 3 seconds
+  useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(false);
     }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
+
+
 
   const updateAppStats = (data) => {
     if (data) {
@@ -124,11 +125,15 @@ function App() {
     }
   };
 
+
+
   const tabs = [
     { id: 'form', label: 'Health Info', icon: <Heart className="w-5 h-5" /> },
     { id: 'qr', label: 'QR Code', icon: <QrCode className="w-5 h-5" /> },
     { id: 'beacon', label: 'Campus Beacon', icon: <MapPin className="w-5 h-5" /> }
   ];
+
+
 
   return (
     <div className="container">
@@ -175,6 +180,8 @@ function App() {
           </h1>
           <p className="app-subtitle">Purdue University Student Safety Network</p>
           <div className="header-decoration"></div>
+          
+
           
           {/* App Stats */}
           {healthData && (
