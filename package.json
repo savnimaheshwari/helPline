@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "helpline-backend",
   "version": "1.0.0",
   "description": "Backend API for Purdue University Student Health & Safety App - Helpline",
@@ -31,5 +32,36 @@
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
+=======
+  "name": "helpline",
+  "version": "1.0.0",
+  "description": "Purdue University Student Health & Safety App - Helpline MVP",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "lucide-react": "^0.263.1",
+    "qrcode": "^1.5.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-scripts": "^5.0.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+>>>>>>> 808ee0ebb98e902502abb9bee941de92227c7eb8
   }
 }
