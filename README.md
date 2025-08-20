@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Helpline
 
 ## How to Run
@@ -39,3 +40,6 @@ npm start
 ### Access
 - Frontend: http://localhost:3000
 - Backend: http://localhost:5001
+=======
+
+>>>>>>> e1e7ba833c448c199d49e8dbb52b4b435d614edc
